@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>API-previsão do tempo</title>
+</head>
+<body>
+    <h1>Previsão do Tempo</h1>
+    <section class="box">
+        <div id="dados-cidade">
+            <h1 id="cidade"></h1>
+            <h3 id="dia">Segunda</h3>
+            <h4 id="data"></h4>
+            <div>Humidade:<span id="humidade"></span>%</div>
+        </div>    
+        <div id="section-estado">
+            <div id="img-main"></div>
+            
+            <h1 id="estado">ESTADO DO CLIMA</h1>
+        </div>
+        <div id="temperatura">
+            <div id="temp-prox">Max:<span id="temp-max"></span>Min:<span id="temp-min"></span></div>
+            <span id="temp-exata"></span>
+            <span id="fuso"></span>
+            <div id="acessorio"></div>
+        </div>
+    </section>
+
+    <script>
+        const renderDados = async() => {
+            const cidade = 'franca';
+            const API_KEY = '4fba7777a650143b8cc1e97b9df53cb2';
+            const url = `https://api.hgbrasil.com/weather?format=json-cors&user_ip=remote&key=3c484e40`;
+            //https://api.hgbrasil.com/weather?key=3c484e40&user_ip=remote
+            //const dados = fetch(url).then(response => response.json);
+            const requisicao = await fetch(url)
+            const dados = await requisicao.json();
+            console.log(dados.results)
+            document.getElementById('cidade').innerHTML = dados.results.city
+            document.getElementById('dia').innerHTML = dados.results.forecast[0].weekday
+            document.getElementById('data').innerHTML = dados.results.date
+            document.getElementById('estado').innerHTML = dados.results.description
+            document.getElementById('temp-exata').innerHTML =  Math.round(dados.results.temp) + "°"
+            document.getElementById('temp-max').innerHTML = Math.round(dados.results.forecast[0].max) + "°"
+            document.getElementById('temp-min').innerHTML = Math.round(dados.results.forecast[0].min) + "°"
+            document.getElementById('humidade').innerHTML = Math.round(dados.results.humidity) 
+            document.getElementById('fuso').innerHTML = dados.results.currently
+            
+            if(dados.results.condition_code == 27 || dados.results.condition_code == 31  || dados.results.condition_code == 32 && dados.results.currently == "dia" ){
+                //tempo limpo ao dia
+                document.getElementById('img-main').innerHTML =
+                `<img src="img/sol.png">`;
+                document.getElementById('acessorio').innerHTML =
+                `<span>Leve: </span><img src="img/oculos.png">`;
+            }else if(dados.results.condition_code == 27 || dados.results.condition_code == 31 || dados.results.condition_code == 33
+                        && dados.results.currently == "noite" ){
+                //tempo limpo á noite
+                document.getElementById('img-main').innerHTML =
+                `<img src="img/lua.png" alt="">`;
+            }else if(dados.results.condition_code == 27 && dados.results.currently == "noite" ){
+                document.getElementById('img-main').innerHTML =
+                `<img src="img/lua.png" alt="">`;
+            }
+            //document.getElementById('img-main').innerHTML =
+        }   
+
+        /* 
+        0 - Tempestade forte
+            1 - Tempestade tropical
+            2 - Furacão
+            3 - Tempestades severas
+            4 - Tempestades
+            5 - Misto de neve e chuva
+            6 - Misto chuva e gelo
+            7 - Misto neve e gelo
+            8 - Geada fina
+            9 - Chuviscos
+            10 - Congelamento chuva
+            11 - Alguns chuviscos
+            12 - Alguns chuviscos
+            13 - Neve baixa
+            14 - Tempestade com neve
+            15 - Ventania com neve
+            16 - Neve
+            17 - Granizo
+            18 - Gelo
+            19 - Poeira
+            20 - Neblina
+            21 - Tempestade de areia
+            22 - Fumacento
+            23 - Vento acentuado
+            24 - Ventania
+            25 - Tempo frio
+            26 - Tempo nublado
+            27 - Tempo limpo
+            28 - Tempo nublado
+            29 - Parcialmente nublado
+            30 - Parcialmente nublado
+            31 - Tempo limpo
+            32 - Ensolarado
+            33 - Estrelado
+            34 - Ensolarado com muitas nuvens
+            35 - Misto chuva e granizo
+            36 - Ar quente
+            37 - Tempestades isoladas
+            38 - Trovoadas dispersas
+            39 - Trovoadas dispersas
+            40 - Chuvas esparsas
+            41 - Pesados neve
+            42 - Chuviscos com neve
+            43 - Neve pesada
+            44 - Sol com poucas nuvens
+            45 - Chuva
+            46 - Queda de neve
+            47 - Tempestades isoladas
+            48 - Serviço não disponível
+                    
+        */
+
+        renderDados();
+    </script>
+    
+</body>
+</html>

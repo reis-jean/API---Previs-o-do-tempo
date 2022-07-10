@@ -1,0 +1,71 @@
+
+body{
+    background-color: #5084d7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    
+}
+
+h1{
+    z-index: 2;
+}
+.box{
+    width: 60%;
+    height: 600px;
+    border-radius: 50px;
+    background: linear-gradient(315deg, #4877c2, #568de6);
+    box-shadow:  -27px -27px 55px #4470b7, 27px 27px 55px #5c98f7;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 0% 3%;
+}
+#dados-cidade{
+    width: 50%;
+    font-size: 1.8em;
+
+}
+#section-estado{
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    z-index: 4;
+}
+img{
+    width: 90%;
+}
+#img-main{
+    width: 400px;
+}
+#temperatura{
+    margin-top: 10%;
+    font-size: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#temperatura div span{
+    margin: 2%;
+}
+#temp-exata{
+    font-size: 4em;
+}
+#fuso{
+    text-align: center;
+}
+
+#acessorio{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#acessorio img{
+    width: 30%;
+}
+#acessorio span{
+    font-size: 0.8em;
+}
