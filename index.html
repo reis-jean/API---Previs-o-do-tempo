@@ -26,6 +26,7 @@
             <span id="temp-exata"></span>
             <span id="fuso"></span>
             <div id="acessorio"></div>
+            
         </div>
     </section>
 
@@ -48,26 +49,76 @@
             document.getElementById('temp-min').innerHTML = Math.round(dados.results.forecast[0].min) + "°"
             document.getElementById('humidade').innerHTML = Math.round(dados.results.humidity) 
             document.getElementById('fuso').innerHTML = dados.results.currently
+
+            const limpo = ["27", "31", "32","33", "34", "36", "44"]
+            const chuva = ["9", "10", "11", "12", "17", "18", "45"]
+            const tempestade = ["0", "1", "2", "3", "4", "37", "35", "38", "39", "40", "47"]
+            const neve = ["5", "6", "7", "8", "13", "14", "15", "16", "18", "41", "46"]
+            const nublado = ["25", "26", "28"]
+            const parcialNublado = ["29", "39"]
+            const neblina = ["19", "21", "20", "22"]
+            const vento = ["23", "24"]
             
-            if(dados.results.condition_code == 27 || dados.results.condition_code == 31  || dados.results.condition_code == 32 && dados.results.currently == "dia" ){
+            if( limpo.includes(dados.results.condition_code) && dados.results.currently == "dia" ){
                 //tempo limpo ao dia
                 document.getElementById('img-main').innerHTML =
                 `<img src="img/sol.png">`;
                 document.getElementById('acessorio').innerHTML =
                 `<span>Leve: </span><img src="img/oculos.png">`;
-            }else if(dados.results.condition_code == 27 || dados.results.condition_code == 31 || dados.results.condition_code == 33
+            }else if(limpo.includes(dados.results.condition_code)
                         && dados.results.currently == "noite" ){
                 //tempo limpo á noite
                 document.getElementById('img-main').innerHTML =
                 `<img src="img/lua.png" alt="">`;
-            }else if(dados.results.condition_code == 27 && dados.results.currently == "noite" ){
+            }else if(chuva.includes(dados.results.condition_code) ){
+                //chuva
                 document.getElementById('img-main').innerHTML =
-                `<img src="img/lua.png" alt="">`;
+                `<img src="img/chuva.png">`;
+            }else if(tempestade.includes(dados.results.condition_code) ){
+                //tempestade
+                document.getElementById('img-main').innerHTML =
+                `<img src="img/tempestade-forte.png">`;
+            }else if(neve.includes(dados.results.condition_code) ){
+                //neve
+                document.getElementById('img-main').innerHTML =
+                `<img src="img/neve.png">`;
+            }else if(nublado.includes(dados.results.condition_code) ){
+                //nublado
+                document.getElementById('img-main').innerHTML =
+                `<img src="img/nublado.png" alt="">`;
+            }else if(parcialNublado.includes(dados.results.condition_code) ){
+                //parcilmente nublado
+                document.getElementById('img-main').innerHTML =
+                `<img src="img/parcialmente-nublado.png" alt="">`;
             }
-            //document.getElementById('img-main').innerHTML =
+            else if(vento.includes(dados.results.condition_code) ){
+                //ventania
+                document.getElementById('img-main').innerHTML =
+                `<img src="img/vento.png" alt="">`;
+            }else if(neblina.includes(dados.results.condition_code) ){
+                //neblina
+                document.getElementById('img-main').innerHTML =
+                `<img src="img/neblina.png" alt="">`;
+            }else{
+                document.getElementById('img-main').innerHTML =
+                `<h2>Fora de serviço</h2>`;
+            }
         }   
 
         /* 
+
+            27, 31,  32, 34, 36, 44 = limpo
+            33 = estrelado
+            9, 10, 11, 12, 17, 18, 45 = chuva
+            0, 1, 2, 3, 4, 37, 35, 38, 39, 40, 47 tempestade 
+            5, 6, 7, 8, 13, 14, 15, 16, 18, 41, 46 = neve 
+            19, 21  = poeira 
+            20, 22= neblina 
+            23, 24 = vento
+            25, 26, 28 = nublado
+            29, 39 = parcialmente nublado
+            48 = serviço não disponivel
+
         0 - Tempestade forte
             1 - Tempestade tropical
             2 - Furacão
