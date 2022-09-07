@@ -9,24 +9,25 @@
 </head>
 <body>
     <h1>Previsão do Tempo</h1>
-    <section class="box">
+    <section id="box">
         <div id="dados-cidade">
-            <h1 id="cidade"></h1>
-            <h3 id="dia">Segunda</h3>
-            <h4 id="data"></h4>
-            <div>Humidade:<span id="humidade"></span>%</div>
+            <h2 id="cidade"></h2>
+            <div>
+                <p id="dia"></p>
+                <p id="data"></p>
+                <div>Humidade: <span id="humidade"></span>%</div>
+            </div>
+            <p id="estado"></p>
         </div>    
         <div id="section-estado">
-            <div id="img-main"></div>
-            
-            <h1 id="estado">ESTADO DO CLIMA</h1>
+            <div id="img-main">
+            </div>
         </div>
         <div id="temperatura">
-            <div id="temp-prox">Max:<span id="temp-max"></span>Min:<span id="temp-min"></span></div>
-            <span id="temp-exata"></span>
-            <span id="fuso"></span>
+            <div> Temperatura:<span id="temp-exata"></span></div>
+            <div> Max:<span id="temp-max"></span></div>
+            <div> Min:<span id="temp-min"></span></div>
             <div id="acessorio"></div>
-            
         </div>
     </section>
 
@@ -48,7 +49,6 @@
             document.getElementById('temp-max').innerHTML = Math.round(dados.results.forecast[0].max) + "°"
             document.getElementById('temp-min').innerHTML = Math.round(dados.results.forecast[0].min) + "°"
             document.getElementById('humidade').innerHTML = Math.round(dados.results.humidity) 
-            document.getElementById('fuso').innerHTML = dados.results.currently
 
             const limpo = ["27", "31", "32","33", "34", "36", "44"]
             const chuva = ["9", "10", "11", "12", "17", "18", "45"]
@@ -64,7 +64,7 @@
                 document.getElementById('img-main').innerHTML =
                 `<img src="img/sol.png">`;
                 document.getElementById('acessorio').innerHTML =
-                `<span>Leve: </span><img src="img/oculos.png">`;
+                `<span>Use: </span><img class="acessorios" src="img/oculos.png" />`;
             }else if(limpo.includes(dados.results.condition_code)
                         && dados.results.currently == "noite" ){
                 //tempo limpo á noite
@@ -84,7 +84,7 @@
                 `<img src="img/neve.png">`;
             }else if(nublado.includes(dados.results.condition_code) ){
                 //nublado
-                document.getElementById('img-main').innerHTML =
+                document.getElementById('section-estado').innerHTML =
                 `<img src="img/nublado.png" alt="">`;
             }else if(parcialNublado.includes(dados.results.condition_code) ){
                 //parcilmente nublado
